@@ -33,27 +33,30 @@ function Schedule() {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const x = d3
-      .scaleBand()
-      .range([0, width])
-      .domain(chartData.map(d => d.label))
-      .padding(0.2);
+    const x = d3.scale
+      .ordinal()
+      .rangeRoundBands([0, width], 0.2)
+      .domain(chartData.map(d => d.label));
 
     const maxCount = d3.max(chartData, d => d.count) || 10;
-    const y = d3
-      .scaleLinear()
+    const y = d3.scale
+      .linear()
       .domain([0, maxCount])
       .range([height, 0]);
 
+    const xAxis = d3.svg.axis().scale(x).orient("bottom");
+    const yAxis = d3.svg.axis().scale(y).orient("left");
+
     svg
       .append("g")
+      .attr("class", "x axis")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x))
+      .call(xAxis)
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "end");
 
-    svg.append("g").call(d3.axisLeft(y));
+    svg.append("g").attr("class", "y axis").call(yAxis);
 
     svg
       .selectAll("rect")
@@ -62,7 +65,7 @@ function Schedule() {
       .append("rect")
       .attr("x", d => x(d.label))
       .attr("y", d => y(d.count))
-      .attr("width", x.bandwidth())
+      .attr("width", x.rangeBand())
       .attr("height", d => height - y(d.count))
       .attr("fill", "#1890ff");
   }, [chartData]);
