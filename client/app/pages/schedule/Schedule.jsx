@@ -109,15 +109,22 @@ function Schedule() {
       setLoading(true);
       setError(null);
 
-      const response = await axios.get("api/queries", {
+      const data = await axios.get("/api/queries", {
         params: {
-          page_size: 1000,
+          page_size: 250,
         },
       });
 
-      const queries = response.results || [];
+      const queries = data.results || [];
       
-      const scheduledQueries = queries.filter(query => query.schedule && query.schedule.interval);
+      const scheduledQueries = queries.filter(query => {
+        const s = query.schedule;
+        if (!s) return false;
+        if (typeof s === "object") return !!(s.interval || s.time || s.day_of_week || s.until);
+        if (typeof s === "string") return s.trim() !== "";
+        if (typeof s === "number") return s > 0;
+        return false;
+      });
 
       const scheduleData = processScheduleData(scheduledQueries);
       
