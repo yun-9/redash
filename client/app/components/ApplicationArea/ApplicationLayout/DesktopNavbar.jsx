@@ -13,6 +13,7 @@ import logoUrl from "@/assets/images/redash_icon_small.png";
 import DesktopOutlinedIcon from "@ant-design/icons/DesktopOutlined";
 import CodeOutlinedIcon from "@ant-design/icons/CodeOutlined";
 import AlertOutlinedIcon from "@ant-design/icons/AlertOutlined";
+import ClockCircleOutlinedIcon from "@ant-design/icons/ClockCircleOutlined";
 import PlusOutlinedIcon from "@ant-design/icons/PlusOutlined";
 import QuestionCircleOutlinedIcon from "@ant-design/icons/QuestionCircleOutlined";
 import SettingOutlinedIcon from "@ant-design/icons/SettingOutlined";
@@ -57,6 +58,7 @@ function useNavbarActiveState() {
       ),
       dataSources: includes(["DataSources.List"], currentRoute.id),
       alerts: includes(["Alerts.List", "Alerts.New", "Alerts.View", "Alerts.Edit"], currentRoute.id),
+      schedule: includes(["Schedule"], currentRoute.id),
     }),
     [currentRoute.id]
   );
@@ -103,6 +105,14 @@ export default function DesktopNavbar() {
             <Link href="alerts">
               <AlertOutlinedIcon aria-label="Alerts navigation button" />
               <span className="desktop-navbar-label">Alerts</span>
+            </Link>
+          </Menu.Item>
+        )}
+        {currentUser.hasPermission("view_query") && (
+          <Menu.Item key="schedule" className={activeState.schedule ? "navbar-active-item" : null}>
+            <Link href="schedule">
+              <ClockCircleOutlinedIcon aria-label="Schedule navigation button" />
+              <span className="desktop-navbar-label">Schedule</span>
             </Link>
           </Menu.Item>
         )}
