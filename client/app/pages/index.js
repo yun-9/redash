@@ -28,6 +28,8 @@ import "./queries/VisualizationEmbed";
 
 import "./query-snippets/QuerySnippetsList";
 
+import "./schedule/SchedulePage";
+
 import "./settings/OrganizationSettings";
 
 import "./users/UsersList";

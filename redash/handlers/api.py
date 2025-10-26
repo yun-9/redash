@@ -80,6 +80,9 @@ from redash.handlers.query_snippets import (
     QuerySnippetListResource,
     QuerySnippetResource,
 )
+from redash.handlers.schedule import (
+    ScheduleStatsResource,
+)
 from redash.handlers.settings import OrganizationSettings
 from redash.handlers.users import (
     UserDisableResource,
@@ -196,6 +199,8 @@ api.add_org_resource(
 api.add_org_resource(DashboardForkResource, "/api/dashboards/<dashboard_id>/fork", endpoint="dashboard_fork")
 
 api.add_org_resource(MyDashboardsResource, "/api/dashboards/my", endpoint="my_dashboards")
+
+api.add_org_resource(ScheduleStatsResource, "/api/schedule-stats", endpoint="schedule_stats")
 
 api.add_org_resource(QueryTagsResource, "/api/queries/tags", endpoint="query_tags")
 api.add_org_resource(DashboardTagsResource, "/api/dashboards/tags", endpoint="dashboard_tags")

@@ -1,10 +1,12 @@
 # This configuration file is for the **development** setup.
 # For a production example please refer to getredash/setup repository on GitHub.
+volumes:
+  mysql_data:
 x-redash-service: &redash-service
   build:
     context: .
     args:
-      skip_frontend_build: "true"  # set to empty string to build
+      skip_frontend_build: "" # set to empty string to build
   volumes:
     - .:/app
   env_file:
@@ -68,4 +70,16 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+    restart: unless-stopped
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: redash_mysql_password
+      MYSQL_DATABASE: redash_test
+      MYSQL_USER: redash
+      MYSQL_PASSWORD: redash_password
+    volumes:
+      - mysql_data:/var/lib/mysql
     restart: unless-stopped

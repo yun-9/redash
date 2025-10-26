@@ -1,0 +1,24 @@
+.schedule-page {
+  min-height: 100vh;
+}
+
+.schedule-content {
+  padding: 20px;
+}
+
+.schedule-page .ant-card {
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-page .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.schedule-page .ant-spin-container {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
